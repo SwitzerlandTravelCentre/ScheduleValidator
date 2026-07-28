@@ -191,8 +191,7 @@
 
     .section-header,
     .stop-list-header,
-    .results-header,
-    .result-toolbar {
+    .results-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -274,12 +273,15 @@
     }
 
     .stop-item {
-      display: grid;
-      gap: 12px;
       padding: 14px;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: #fbfcfe;
+    }
+
+    .stop-item[open] {
+      display: grid;
+      gap: 12px;
     }
 
     .stop-item-header {
@@ -288,6 +290,12 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .stop-item-header::-webkit-details-marker {
+      display: none;
     }
 
     .stop-title {
@@ -298,8 +306,32 @@
       min-width: 0;
     }
 
+    .stop-title::before {
+      content: "▸";
+      color: var(--muted);
+      font-size: 0.75rem;
+      transition: transform 140ms ease;
+    }
+
+    .stop-item[open] .stop-title::before {
+      transform: rotate(90deg);
+    }
+
     .stop-title strong {
       overflow-wrap: anywhere;
+    }
+
+    .stop-meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 750;
+    }
+
+    .stop-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
     }
 
     .stop-main-row {
@@ -478,6 +510,18 @@
       margin-top: 12px;
     }
 
+    .overview-blocked {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .overview-blocked h3 {
+      font-size: 0.95rem;
+    }
+
     .overview-stop {
       border-top: 1px solid var(--border);
       padding-top: 12px;
@@ -518,10 +562,6 @@
       margin-bottom: 14px;
     }
 
-    .result-toolbar {
-      align-items: end;
-    }
-
     .month-controls {
       display: flex;
       gap: 8px;
@@ -534,36 +574,16 @@
       width: 158px;
     }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
-      overflow-x: auto;
-    }
-
-    .tab-button {
-      min-width: 132px;
-      border: 0;
-      border-radius: var(--radius) var(--radius) 0 0;
-      border-bottom: 3px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 750;
-    }
-
-    .tab-button:hover {
-      background: var(--surface-soft);
-    }
-
-    .tab-button[aria-selected="true"] {
-      color: var(--primary-dark);
-      border-bottom-color: var(--primary);
-    }
-
     .blocked-list {
       display: grid;
       gap: 10px;
+    }
+
+    .overview-blocked .blocked-list {
+      max-height: 320px;
+      overflow: auto;
+      gap: 6px;
+      padding-right: 4px;
     }
 
     .blocked-item {
@@ -573,6 +593,11 @@
       border-radius: var(--radius);
       background: var(--blocked-soft);
       padding: 12px;
+    }
+
+    .overview-blocked .blocked-item {
+      padding: 8px 10px;
+      border-left-width: 3px;
     }
 
     .blocked-item h3 {
@@ -585,15 +610,6 @@
     .blocked-item h3 span {
       color: var(--blocked);
       font-size: 0.88rem;
-    }
-
-    .reason-list {
-      display: grid;
-      gap: 4px;
-      margin: 0;
-      padding-left: 18px;
-      color: #5a2630;
-      font-size: 0.92rem;
     }
 
     .calendar-grid {
@@ -703,68 +719,6 @@
       white-space: nowrap;
     }
 
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-      background: #fff;
-    }
-
-    th,
-    td {
-      border-bottom: 1px solid var(--border);
-      padding: 10px;
-      text-align: left;
-      vertical-align: top;
-      font-size: 0.9rem;
-    }
-
-    th {
-      color: var(--muted);
-      background: var(--surface-soft);
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      border-radius: 999px;
-      padding: 3px 9px;
-      font-size: 0.78rem;
-      font-weight: 850;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .status-pill.is-ok {
-      color: var(--ok);
-      background: var(--ok-soft);
-    }
-
-    .status-pill.is-blocked {
-      color: var(--blocked);
-      background: var(--blocked-soft);
-    }
-
-    .status-pill.is-empty {
-      color: var(--warning);
-      background: var(--warning-soft);
-    }
-
     .muted {
       color: var(--muted);
     }
@@ -788,7 +742,6 @@
       .section-header,
       .stop-list-header,
       .results-header,
-      .result-toolbar,
       .overview-title {
         align-items: stretch;
         flex-direction: column;
@@ -844,7 +797,6 @@
 
       .editor-surface,
       .button-row,
-      .tabs,
       .month-controls,
       .data-drawer {
         display: none !important;
@@ -896,9 +848,8 @@
         <div class="stop-list-header">
           <div>
             <h3>Locations</h3>
-            <p>Beliebig viele Locations ergänzen; die Reisetage werden automatisch aus der Reihenfolge berechnet.</p>
+            <p>Reihenfolge und Nächte bestimmen die Reisetage.</p>
           </div>
-          <button class="primary-button" type="button" data-action="add-stop">Location hinzufügen</button>
         </div>
 
         <div id="stopsEditor" class="stops-editor"></div>
@@ -958,13 +909,17 @@
 
         <div id="statsGrid" class="stats-grid"></div>
         <div id="tripOverview" class="overview-list"></div>
+        <section class="overview-blocked" aria-labelledby="blockedStartsTitle">
+          <h3 id="blockedStartsTitle">Blockierte Startdaten</h3>
+          <div id="blockedStartsOverview"></div>
+        </section>
       </aside>
     </section>
 
     <section class="results-surface" aria-labelledby="resultsTitle">
       <div class="results-header">
         <div>
-          <h2 id="resultsTitle">Verfügbarkeitsprüfung</h2>
+          <h2 id="resultsTitle">Kalender</h2>
           <p id="resultsRange" class="range-label"></p>
         </div>
         <div class="month-controls" aria-label="Monatsnavigation">
@@ -975,7 +930,6 @@
         </div>
       </div>
 
-      <div id="tabs" class="tabs" role="tablist" aria-label="Ergebnisansichten"></div>
       <div id="resultsContent"></div>
     </section>
   </main>
@@ -985,18 +939,11 @@
       "use strict";
 
       const STORAGE_KEY = "fit-package-validator:v1";
-      const TABS = [
-        ["blocked", "Blockierte Daten"],
-        ["calendar", "Kalender"],
-        ["matrix", "Matrix"]
-      ];
       const WEEKDAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
       const ONE_YEAR_DAYS = 365;
-      const MATRIX_DAYS = 60;
       const today = startOfDay(new Date());
 
       let state = normalizeState(loadState() || sampleState());
-      let activeTab = TABS.some(([key]) => key === state.activeTab) ? state.activeTab : "blocked";
       const els = {};
 
       document.addEventListener("DOMContentLoaded", init);
@@ -1015,9 +962,9 @@
         els.stopsEditor = document.getElementById("stopsEditor");
         els.statsGrid = document.getElementById("statsGrid");
         els.tripOverview = document.getElementById("tripOverview");
+        els.blockedStartsOverview = document.getElementById("blockedStartsOverview");
         els.horizonLabel = document.getElementById("horizonLabel");
         els.resultsRange = document.getElementById("resultsRange");
-        els.tabs = document.getElementById("tabs");
         els.resultsContent = document.getElementById("resultsContent");
         els.transferData = document.getElementById("transferData");
         els.statusMessage = document.getElementById("statusMessage");
@@ -1036,6 +983,7 @@
           state.selectedMonth = event.target.value || monthKey(parseDate(state.analysisStart) || today);
         } else if (event.target.dataset.stopId && event.target.dataset.blockId) {
           updateBlockField(event.target.dataset.stopId, event.target.dataset.blockId, field, event.target.value);
+          syncBlockInputs(event.target.dataset.stopId, event.target.dataset.blockId);
           updateBlockEffectLabels();
         } else if (event.target.dataset.stopId) {
           updateStopField(event.target.dataset.stopId, field, event.target.value);
@@ -1074,14 +1022,10 @@
           renderAll();
         } else if (action === "load-sample") {
           state = normalizeState(sampleState());
-          activeTab = "calendar";
-          state.activeTab = activeTab;
           renderAll();
           setStatus("Beispieldaten geladen.");
         } else if (action === "reset-trip") {
           state = normalizeState(blankState());
-          activeTab = "blocked";
-          state.activeTab = activeTab;
           renderAll();
           setStatus("Neue Reise angelegt.");
         } else if (action === "export-data") {
@@ -1099,11 +1043,6 @@
         } else if (action === "jump-start") {
           state.selectedMonth = monthKey(parseDate(state.analysisStart) || today);
           renderAll();
-        } else if (action === "set-tab") {
-          activeTab = button.dataset.tab || "blocked";
-          state.activeTab = activeTab;
-          renderResults(buildModel());
-          saveState();
         }
       }
 
@@ -1119,6 +1058,7 @@
         const model = buildModel();
         renderStats(model);
         renderOverview(model);
+        renderBlockedOverview(model);
         renderResults(model);
         saveState();
       }
@@ -1130,19 +1070,26 @@
       function stopTemplate(stop, index) {
         const ranges = buildStopRanges();
         const rangeLabel = stopDayLabel(ranges[index]);
+        const isFilled = Boolean(stop.location.trim()) && parseInteger(stop.nights) > 0;
+        const blockCount = stop.blocks.filter(block => block.from || block.to || block.description.trim()).length;
+        const summaryName = stop.location.trim() || `Location ${index + 1}`;
+        const summaryMeta = `${parseInteger(stop.nights)} Nächte · ${blockCount} Sperrdaten`;
         const blocks = stop.blocks.length
           ? stop.blocks.map(block => blockTemplate(stop, block)).join("")
           : `<p class="empty-state">Keine Sperrdaten für diese Location.</p>`;
 
         return `
-          <section class="stop-item" data-stop-section="${escapeAttr(stop.id)}">
-            <div class="stop-item-header">
+          <details class="stop-item" data-stop-section="${escapeAttr(stop.id)}" ${isFilled ? "" : "open"}>
+            <summary class="stop-item-header">
               <div class="stop-title">
-                <strong>Location ${index + 1}</strong>
+                <strong>${escapeHtml(summaryName)}</strong>
                 <output class="stop-days" data-stop-days="${escapeAttr(stop.id)}">${rangeLabel}</output>
+                <span class="stop-meta">${escapeHtml(summaryMeta)}</span>
               </div>
-              <button class="icon-button danger-button" type="button" data-action="delete-stop" data-stop-id="${escapeAttr(stop.id)}" title="Location entfernen" aria-label="Location entfernen">×</button>
-            </div>
+              <span class="stop-actions">
+                <button class="icon-button danger-button" type="button" data-action="delete-stop" data-stop-id="${escapeAttr(stop.id)}" title="Location entfernen" aria-label="Location entfernen">×</button>
+              </span>
+            </summary>
             <div class="stop-main-row">
               <label>
                 <span>Location Name</span>
@@ -1158,7 +1105,7 @@
               <button class="quiet-button" type="button" data-action="add-block" data-stop-id="${escapeAttr(stop.id)}">Sperrdatum hinzufügen</button>
             </div>
             <div class="blocks-grid">${blocks}</div>
-          </section>
+          </details>
         `;
       }
 
@@ -1244,24 +1191,14 @@
       function renderResults(model) {
         els.monthPicker.value = state.selectedMonth;
         els.resultsRange.textContent = `${monthLabel(state.selectedMonth)} · ${formatDate(model.horizonStart)} bis ${formatDate(model.horizonEnd)}`;
-        renderTabs();
-
-        if (activeTab === "calendar") {
-          els.resultsContent.innerHTML = renderCalendar(model);
-        } else if (activeTab === "matrix") {
-          els.resultsContent.innerHTML = renderMatrix(model);
-        } else {
-          els.resultsContent.innerHTML = renderBlockedList(model);
-        }
+        els.resultsContent.innerHTML = renderCalendar(model);
       }
 
-      function renderTabs() {
-        els.tabs.innerHTML = TABS.map(([key, label]) => `
-          <button class="tab-button" type="button" role="tab" data-action="set-tab" data-tab="${key}" aria-selected="${activeTab === key ? "true" : "false"}">${label}</button>
-        `).join("");
+      function renderBlockedOverview(model) {
+        els.blockedStartsOverview.innerHTML = blockedOverviewHtml(model);
       }
 
-      function renderBlockedList(model) {
+      function blockedOverviewHtml(model) {
         const month = parseMonthKey(state.selectedMonth);
         const entries = model.entries.filter(entry => {
           return entry.status === "blocked" &&
@@ -1270,11 +1207,11 @@
         });
 
         if (!model.totalNights) {
-          return `<p class="empty-state">Lege mindestens eine Location mit Nächten an, damit Startdaten geprüft werden.</p>`;
+          return `<p class="empty-state">Keine Prüfung ohne Nächte.</p>`;
         }
 
         if (!entries.length) {
-          return `<p class="empty-state">Für ${escapeHtml(monthLabel(state.selectedMonth))} sind keine blockierten Startdaten im Prüfzeitraum vorhanden.</p>`;
+          return `<p class="empty-state">Keine im gewählten Monat.</p>`;
         }
 
         return `
@@ -1282,12 +1219,9 @@
             ${entries.map(entry => `
               <article class="blocked-item">
                 <h3>
-                  <strong>Startdatum ${escapeHtml(formatDate(entry.date))}</strong>
-                  <span>Blockiert</span>
+                  <strong>${escapeHtml(formatDate(entry.date))}</strong>
+                  <span>Start nicht möglich</span>
                 </h3>
-                <ul class="reason-list">
-                  ${entry.reasons.map(reason => `<li>${escapeHtml(reasonSentence(reason))}</li>`).join("")}
-                </ul>
               </article>
             `).join("")}
           </div>
@@ -1349,61 +1283,6 @@
             ${WEEKDAYS.map(day => `<div class="weekday">${day}</div>`).join("")}
             ${cells.join("")}
           </div>
-        `;
-      }
-
-      function renderMatrix(model) {
-        const month = parseMonthKey(state.selectedMonth);
-        const matrixStart = new Date(month.year, month.month, 1);
-        const rows = [];
-
-        for (let i = 0; i < MATRIX_DAYS; i += 1) {
-          const date = addDays(matrixStart, i);
-          rows.push(checkStart(date, model.stops, model.totalNights));
-        }
-
-        const stopHeaders = model.stops
-          .filter(stop => stop.nights > 0)
-          .map(stop => `<th>${escapeHtml(stop.location || `Location ${stop.index + 1}`)}</th>`)
-          .join("");
-
-        return `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Startdatum</th>
-                  ${stopHeaders || "<th>Locations</th>"}
-                  <th>Status</th>
-                  <th>Grund</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows.map(row => matrixRow(row, model)).join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
-      }
-
-      function matrixRow(row, model) {
-        const statusClass = row.status === "blocked" ? "is-blocked" : row.status === "ok" ? "is-ok" : "is-empty";
-        const statusText = row.status === "blocked" ? "Blockiert" : row.status === "ok" ? "OK" : "Unvollständig";
-        const segmentCells = model.stops.filter(stop => stop.nights > 0).length
-          ? model.stops.filter(stop => stop.nights > 0).map(stop => {
-            const segment = row.segments.find(item => item.stopId === stop.id);
-            return `<td>${segment ? escapeHtml(formatDateRange(segment.start, segment.end)) : ""}</td>`;
-          }).join("")
-          : `<td class="muted">Keine Locations mit Nächten</td>`;
-        const reason = row.reasons.length ? row.reasons.map(reason => reasonShort(reason)).join("; ") : "";
-
-        return `
-          <tr>
-            <td class="nowrap">${escapeHtml(formatDate(row.date))}</td>
-            ${segmentCells}
-            <td><span class="status-pill ${statusClass}">${statusText}</span></td>
-            <td>${escapeHtml(reason)}</td>
-          </tr>
         `;
       }
 
@@ -1555,18 +1434,6 @@
         };
       }
 
-      function reasonSentence(reason) {
-        const location = reason.stop.location || `Location ${reason.stop.index + 1}`;
-        const eventName = reason.block.description || "Sperrdatum";
-        return `${location}: ${formatDateRange(reason.occupiedStart, reason.occupiedEnd)} belegt, überschneidet ${formatDateRange(reason.block.effectiveStart, reason.block.effectiveEnd)} (${eventName}).`;
-      }
-
-      function reasonShort(reason) {
-        const location = reason.stop.location || `Location ${reason.stop.index + 1}`;
-        const eventName = reason.block.description || "Sperrdatum";
-        return `${location}: ${eventName}`;
-      }
-
       function calendarEventLabel(event) {
         return event.description;
       }
@@ -1591,11 +1458,23 @@
         const block = stop ? stop.blocks.find(item => item.id === blockId) : null;
         if (!block) return;
 
-        if (field === "from" || field === "to" || field === "description") {
+        if (field === "from") {
+          block.from = value;
+          if (!block.to) block.to = value;
+        } else if (field === "to" || field === "description") {
           block[field] = value;
         } else if (field === "buffer") {
           block.buffer = Math.max(0, parseInteger(value));
         }
+      }
+
+      function syncBlockInputs(stopId, blockId) {
+        const stop = findStop(stopId);
+        const block = stop ? stop.blocks.find(item => item.id === blockId) : null;
+        if (!block) return;
+
+        const toInput = document.querySelector(`[data-stop-id="${cssEscape(stopId)}"][data-block-id="${cssEscape(blockId)}"][data-field="to"]`);
+        if (toInput && toInput.value !== block.to) toInput.value = block.to;
       }
 
       function removeStop(stopId) {
@@ -1669,7 +1548,6 @@
         try {
           const imported = JSON.parse(els.transferData.value);
           state = normalizeState(imported);
-          activeTab = TABS.some(([key]) => key === state.activeTab) ? state.activeTab : "blocked";
           renderAll();
           setStatus("Daten importiert.");
         } catch (error) {
@@ -1711,7 +1589,6 @@
 
       function saveState() {
         try {
-          state.activeTab = activeTab;
           localStorage.setItem(STORAGE_KEY, JSON.stringify(stripRuntimeFields(state)));
         } catch (error) {
           setStatus("Lokale Speicherung ist in diesem Browser nicht verfügbar.", true);
@@ -1732,7 +1609,6 @@
           packageName: value.packageName || "",
           analysisStart: value.analysisStart || dateKey(today),
           selectedMonth: value.selectedMonth || monthKey(today),
-          activeTab: value.activeTab || activeTab,
           stops: (value.stops || []).map(stop => ({
             id: stop.id,
             location: stop.location || "",
@@ -1768,7 +1644,6 @@
           packageName: typeof value.packageName === "string" ? value.packageName : "",
           analysisStart,
           selectedMonth,
-          activeTab: value.activeTab || "blocked",
           stops
         };
       }
@@ -1778,7 +1653,6 @@
           packageName: "",
           analysisStart: dateKey(today),
           selectedMonth: monthKey(today),
-          activeTab: "blocked",
           stops: [
             { ...newStop(), location: "", nights: 3 },
             { ...newStop(), location: "", nights: 3 }
@@ -1792,7 +1666,6 @@
           packageName: "Alpine Holiday",
           analysisStart: base,
           selectedMonth: "2027-06",
-          activeTab: "calendar",
           stops: [
             {
               id: makeId("stop"),
@@ -1865,6 +1738,7 @@
 
       function focusLastBlock(stopId) {
         const section = els.stopsEditor.querySelector(`[data-stop-section="${cssEscape(stopId)}"]`);
+        if (section && "open" in section) section.open = true;
         const inputs = section ? section.querySelectorAll("[data-field='from']") : [];
         const last = inputs[inputs.length - 1];
         if (last) last.focus();

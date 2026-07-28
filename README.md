@@ -13,7 +13,9 @@ a location overlaps with a blocked event date.
 - Set nights per location; travel days are calculated automatically.
 - Add multiple blocked date ranges per location.
 - Add buffer days before and after blocked date ranges.
-- View results as blocked start dates, calendar, and 60-day matrix.
+- View availability in a focused calendar.
+- See blocked start dates beside the trip overview.
+- Collapse completed locations to keep the calendar visible.
 - Mark actual event days in the calendar, for example `Trucker Festival`.
 - Store data locally in the browser with `localStorage`.
 - Export and import trip data as JSON.
