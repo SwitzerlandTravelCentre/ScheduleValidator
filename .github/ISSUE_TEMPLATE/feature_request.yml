@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest an improvement for the FIT Package Validator
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: User need
+      description: What workflow should become easier?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior or UI you would like.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example data or screenshots
+      description: Add sample package data, dates, or screenshots if helpful.
