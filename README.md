@@ -71,6 +71,11 @@ with a location's effective blocked date range. The effective range is:
 blocked from - buffer days  through  blocked to + buffer days
 ```
 
+## Design
+
+The UI follows the Airbnb-inspired direction in [design.md](./design.md): white
+canvas, near-black ink, one Rausch accent, rounded controls, and flat surfaces.
+
 ## Development
 
 This project is intentionally dependency-free. The product code lives in
